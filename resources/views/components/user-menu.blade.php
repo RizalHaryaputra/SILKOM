@@ -11,7 +11,7 @@ $u = Auth::user();
             src="{{ $u->photo ? asset('storage/'.$u->photo) : 'https://ui-avatars.com/api/?name='.urlencode($u->name).'&background=random' }}"
             alt="{{ $u->name }}">
 
-        <span class=" fhidden font-medium text-gray-700 sm:block">{{ $u->name }}</span>
+        <span class="hidden font-medium text-gray-700 sm:block">{{ $u->name }}</span>
 
         <svg class="h-5 w-5 text-gray-500 hidden sm:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
             fill="currentColor">
