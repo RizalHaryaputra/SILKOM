@@ -46,15 +46,15 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // 3. Definisikan dan Buat Peran (Roles) lalu sinkronkan Izin
 
-        // Role: Pimpinan
-        $pimpinanRole = Role::firstOrCreate(['name' => 'Pimpinan', 'guard_name' => 'web']);
-        $pimpinanRole->syncPermissions([
+        // Role: EIS Lead
+        $leadRole = Role::firstOrCreate(['name' => 'Lead', 'guard_name' => 'web']);
+        $leadRole->syncPermissions([
             'view-eis-dashboard',
             'view-reports'
         ]);
 
         // Role: Admin Lab
-        $adminRole = Role::firstOrCreate(['name' => 'Admin Lab', 'guard_name' => 'web']);
+        $adminRole = Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'web']);
         $adminRole->syncPermissions([
             'view-reports',
             'manage-assets',

@@ -26,14 +26,14 @@ class UserSeeder extends Seeder
                 'email' => 'pimpinan@lab.com',
                 'password' => Hash::make('password') // Ganti password di production
             ]);
-            $pimpinan->assignRole('Pimpinan');
+            $pimpinan->assignRole('Lead');
             
             $admin = User::create([
                 'name' => 'Admin Lab Utama',
                 'email' => 'admin@lab.com',
                 'password' => Hash::make('password')
             ]);
-            $admin->assignRole('Admin Lab');
+            $admin->assignRole('Admin');
 
             $staff = User::create([
                 'name' => 'Staff Lab',
