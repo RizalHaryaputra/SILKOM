@@ -25,7 +25,7 @@
                         <div class="space-y-2">
                             <label for="name" class="flex items-center text-sm font-semibold text-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 text-gray-500">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10.5 11.25h3M12 15h.008m-7.008 4.5h12.016a1.125 1.125 0 0 0 1.125-1.125V9.75M18.75 9.75h.375c.621 0 1.125.504 1.125 1.125v.375m-1.5-1.5V5.625c0-.621-.504-1.125-1.125-1.125H6.75c-.621 0-1.125.504-1.125 1.125v3.375c0 .621.504 1.125 1.125 1.125h.375m1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v.375m-1.5-1.5V5.625" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                                 </svg>
                                 Nama Aset
                             </label>
