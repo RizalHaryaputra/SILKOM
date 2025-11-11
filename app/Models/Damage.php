@@ -16,6 +16,7 @@ class Damage extends Model
         'asset_id',
         'reporter_admin_id',
         'description',
+        'damage_image_path',
         'reported_at',
         'repair_status',
         'repair_cost',
