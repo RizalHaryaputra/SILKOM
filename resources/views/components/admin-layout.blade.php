@@ -86,9 +86,22 @@
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="1.5"
                                 d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z" />
-  <path stroke-linecap="round" stroke-linejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.867 19.125h.008v.008h-.008v-.008Z" />
                         </svg>
                         <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Kerusakan</span>
+                    </a>
+
+                    <a href="{{ route('admin.borrow.requests.index') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.borrow.requests.index') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                        :class="sidebarCollapsed && 'justify-center'">
+                        <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                        </svg>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Peminjaman</span>
                     </a>
 
                 </nav>

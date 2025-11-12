@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AssetController;
+use App\Http\Controllers\Admin\BorrowingApprovalController;
 use App\Http\Controllers\Admin\DamageController;
 use App\Http\Controllers\Lead\LeadDashboardController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,19 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('assets', AssetController::class);
     Route::resource('damages', DamageController::class);
+
+    // --- RUTE PERSETUJUAN PEMINJAMAN ---
+    // Halaman utama untuk melihat daftar permintaan
+    Route::get('borrow-requests', [BorrowingApprovalController::class, 'index'])->name('borrow.requests.index');
+
+    // Aksi untuk Menyetujui
+    Route::put('borrow-requests/{borrowing}/approve', [BorrowingApprovalController::class, 'approve'])->name('borrow.requests.approve');
+
+    // Aksi untuk Menolak
+    Route::put('borrow-requests/{borrowing}/reject', [BorrowingApprovalController::class, 'reject'])->name('borrow.requests.reject');
+
+    // Aksi untuk Menyelesaikan (Mengembalikan)
+    Route::put('borrow-requests/{borrowing}/complete', [BorrowingApprovalController::class, 'complete'])->name('borrow.requests.complete');
 });
 
 // Route for Lead
@@ -47,4 +61,4 @@ Route::middleware(['auth', 'role:Student'])->prefix('student')->name('student.')
     Route::resource('borrow', BorrowingController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
