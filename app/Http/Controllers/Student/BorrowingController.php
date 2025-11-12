@@ -28,7 +28,7 @@ class BorrowingController extends Controller
 
     public function create()
     {
-        $availableAssets = Asset::where('status', 'Available')
+        $availableAssets = Asset::where('status', 'Available')->where('category', '!=', 'Computer')
             ->orderBy('name')
             ->get();
 
