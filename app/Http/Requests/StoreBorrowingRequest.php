@@ -25,6 +25,7 @@ class StoreBorrowingRequest extends FormRequest
                 Rule::exists('assets', 'id')->where('status', 'Available')
             ],
             'borrowed_at' => 'required|date|after_or_equal:today',
+            'purpose' => 'required|string|max:1000',
         ];
     }
 

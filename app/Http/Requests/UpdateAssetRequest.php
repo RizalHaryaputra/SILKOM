@@ -15,12 +15,11 @@ class UpdateAssetRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'category' => 'required|string|max:100',
+            'category' => 'required|in:Computer,Peripheral,Networking,Storage,Software,Furniture,Other',
             'description' => 'nullable|string',
-            // Gambar tidak 'required' saat update, tapi jika ada, harus valid
+            // Validasi untuk gambar (opsional, maks 2MB)
             'asset_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'total_quantity' => 'required|integer|min:1',
-            'status' => 'required|string|in:Available,Borrowed,Damaged',
+            'status' => 'required|in:Available,Borrowed,Damaged',
             'purchase_price' => 'nullable|numeric|min:0',
         ];
     }

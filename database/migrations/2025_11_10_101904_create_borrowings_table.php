@@ -12,17 +12,18 @@ return new class extends Migration
         Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
 
-            // user_id adalah peminjam (Mahasiswa/Staff) [cite: 102, 103]
+            // user_id adalah peminjam (Mahasiswa/Staff)
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('asset_id')->nullable()->constrained('assets')->nullOnDelete();
-            
-            // admin_id adalah Admin Lab yang menyetujui [cite: 101]
+
+            // admin_id adalah Admin Lab yang menyetujui
             $table->foreignId('approver_admin_id')->nullable()->constrained('users')->nullOnDelete();
 
+            $table->text('purpose')->nullable();
             $table->dateTime('borrowed_at');
             $table->dateTime('returned_at')->nullable();
-            $table->string('status')->default('Pending'); // 'Pending' [cite: 54], 'Approved' [cite: 62], 'Rejected'[cite: 63], 'Completed'
-            
+            $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Completed'])->default('Pending'); // 'Pending', 'Approved', 'Rejected', 'Completed'
+
             $table->timestamps();
             // Tidak pakai softDeletes, ini adalah log transaksional
         });

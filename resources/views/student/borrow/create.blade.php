@@ -62,6 +62,23 @@
                         @enderror
                     </div>
 
+                    {{-- Tujuan --}}
+                    <div class="space-y-2">
+                        <label for="purpose" class="flex items-center text-sm font-semibold text-gray-700">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                            Tujuan Peminjaman
+                        </label>
+                        <textarea id="purpose" name="purpose" rows="5" required
+                            placeholder="Jelaskan tujuan Anda ingin meminjam aset ini..."
+                            class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900 placeholder:text-gray-400 resize-vertical">{{ old('purpose') }}</textarea>
+                        @error('purpose')
+                        <div class="flex items-center mt-2 text-red-600 text-sm">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
                     {{-- Tanggal Rencana Pinjam --}}
                     <div class="space-y-2">
                         <label for="borrowed_at" class="flex items-center text-sm font-semibold text-gray-700">

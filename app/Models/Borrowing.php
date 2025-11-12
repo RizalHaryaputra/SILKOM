@@ -15,6 +15,7 @@ class Borrowing extends Model
         'user_id',
         'asset_id',
         'approver_admin_id',
+        'purpose',
         'borrowed_at',
         'returned_at',
         'status',

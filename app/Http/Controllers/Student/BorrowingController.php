@@ -44,6 +44,7 @@ class BorrowingController extends Controller
             'user_id' => auth()->id(),
             'asset_id' => $data['asset_id'],
             'borrowed_at' => $data['borrowed_at'],
+            'purpose' => $data['purpose'],
             'status' => 'Pending', // <-- Status awal
         ]);
 

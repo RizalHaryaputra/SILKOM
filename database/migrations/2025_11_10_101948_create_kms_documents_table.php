@@ -1,5 +1,4 @@
 <?php
-// database/migrations/xxxx_xx_xx_xxxxxx_create_kms_documents_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,14 +11,28 @@ return new class extends Migration
         Schema::create('kms_documents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('content'); // Untuk panduan [cite: 34]
-            $table->string('category')->nullable(); // e.g., 'Maintenance', 'Network', 'Software'
-            
-            // Opsional: Lacak penulis (Admin/Staff)
-            $table->foreignId('author_user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->longText('content'); // Isi panduan
+
+            // Enum untuk kategori dokumen KMS laboratorium komputer
+            $table->enum('category', [
+                'Maintenance',
+                'Network',
+                'Software',
+                'Hardware',
+                'Guideline',
+                'Troubleshooting',
+                'Safety',
+                'Other',
+            ])->default('Other');
+
+            // gambar
+            $table->string('cover_image')->nullable(); // Gambar utama / thumbnail
+
+            // Penulis dokumen
+            $table->string('author')->nullable();
 
             $table->timestamps();
-            $table->softDeletes(); // Prosedur bisa usang
+            $table->softDeletes(); // Dokumen bisa dihapus tanpa hilang permanen
         });
     }
 

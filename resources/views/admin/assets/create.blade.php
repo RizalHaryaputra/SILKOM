@@ -48,9 +48,16 @@
                                 </svg>
                                 Kategori
                             </label>
-                            <input type="text" id="category" name="category" placeholder="Mis: Komputer, Periferal, Lainnya" required
-                                class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
-                                value="{{ old('category') }}">
+                            <select id="category" name="category" required
+                                class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900">
+                                <option value="Computer" @if(old('category') == 'Computer') selected @endif>Computer</option>
+                                <option value="Peripheral" @if(old('category') == 'Peripheral') selected @endif>Peripheral</option>
+                                <option value="Networking" @if(old('category') == 'Networking') selected @endif>Networking</option>
+                                <option value="Storage" @if(old('category') == 'Storage') selected @endif>Storage</option>
+                                <option value="Software" @if(old('category') == 'Software') selected @endif>Software</option>
+                                <option value="Furniture" @if(old('category') == 'Furniture') selected @endif>Furniture</option>
+                                <option value="Other" @if(old('category') == 'Other') selected @endif>Other</option>
+                            </select>
                             @error('category')
                             <div class="flex items-center mt-2 text-red-600 text-sm">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -78,27 +85,7 @@
                     </div>
 
                     {{-- Baris 3: Jumlah, Status, Harga (Grid) --}}
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        
-                        {{-- Jumlah Total --}}
-                        <div class="space-y-2">
-                            <label for="total_quantity" class="flex items-center text-sm font-semibold text-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 text-gray-500">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                                </svg>
-                                Jumlah
-                            </label>
-                            <input type="number" id="total_quantity" name="total_quantity" placeholder="1" required
-                                class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
-                                value="{{ old('total_quantity', 1) }}">
-                            @error('total_quantity')
-                            <div class="flex items-center mt-2 text-red-600 text-sm">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {{-- Status --}}
                         <div class="space-y-2">
                             <label for="status" class="flex items-center text-sm font-semibold text-gray-700">
