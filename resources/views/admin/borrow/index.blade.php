@@ -132,7 +132,7 @@
                             <td class="px-4 py-3">{{ $borrowing->borrowed_at->isoFormat('DD MMM YYYY') }}</td>
                             {{-- Kolom Aksi --}}
                             <td class="px-4 py-3 text-center">
-                                <div class="flex items-center justify-center">
+                                <div class="flex items-center justify-center gap-2">
                                     <a href="{{ route('admin.borrow.requests.show', $borrowing) }}"
                                         class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150">Detail</a>
                                     {{-- Tombol Selesaikan --}}

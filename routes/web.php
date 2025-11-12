@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BorrowingApprovalController;
 use App\Http\Controllers\Admin\DamageController;
 use App\Http\Controllers\Lead\LeadDashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Staff\ComputerUsageController;
 use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Student\BorrowingController;
 use App\Http\Controllers\Student\StudentDashboardController;
@@ -47,6 +48,16 @@ Route::middleware(['auth', 'role:Lead'])->prefix('lead')->name('lead.')->group(f
 // Route for Staff
 Route::middleware(['auth', 'role:Staff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
+
+    // Rute untuk Laporan (MIS)
+    // Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+
+    // Rute untuk Log Penggunaan Komputer (TPS)
+    Route::get('computer-usage/log', [ComputerUsageController::class, 'create'])->name('computer-usage.create');
+    Route::post('computer-usage/log', [ComputerUsageController::class, 'store'])->name('computer-usage.store');
+    Route::get('computer-usage/history', [ComputerUsageController::class, 'index'])->name('computer-usage.index');
+    Route::patch('computer-usage/{computerUsage}/finish', [ComputerUsageController::class, 'finish'])->name('computer-usage.finish');
+    Route::delete('computer-usage/{computerUsage}', [ComputerUsageController::class, 'destroy'])->name('computer-usage.destroy');
 });
 
 // Route for Student
