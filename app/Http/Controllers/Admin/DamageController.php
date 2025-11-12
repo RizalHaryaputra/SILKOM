@@ -93,6 +93,11 @@ class DamageController extends Controller
             ->with('success', 'Laporan kerusakan berhasil diperbarui.');
     }
 
+    public function show(Damage $damage)
+    {
+        return view('admin.damages.show', compact('damage'));
+    }
+
     // Menghapus laporan kerusakan (Soft Delete)
     public function destroy(Damage $damage)
     {

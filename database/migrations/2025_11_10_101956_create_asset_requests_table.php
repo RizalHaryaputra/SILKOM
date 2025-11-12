@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('requester_user_id')->nullable()->constrained('users')->nullOnDelete();
 
             $table->string('asset_name');
-            $table->text('specifications')->nullable();
+            $table->text('specification')->nullable();
             $table->text('reason')->nullable();
-            $table->string('status')->default('Pending'); // 'Pending', 'Approved', 'Rejected'
+            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending'); // 'Pending', 'Approved', 'Rejected'
 
             $table->timestamps();
             $table->softDeletes(); // Pengajuan bisa dibatalkan

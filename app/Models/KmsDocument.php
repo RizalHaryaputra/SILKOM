@@ -14,9 +14,10 @@ class KmsDocument extends Model
 
     protected $fillable = [
         'title',
+        'cover_image',
         'content',
         'category',
-        'author_user_id',
+        'author',
     ];
 
     /**

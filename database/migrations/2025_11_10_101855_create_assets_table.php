@@ -1,5 +1,4 @@
 <?php
-// database/migrations/xxxx_xx_xx_xxxxxx_create_assets_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,14 +11,29 @@ return new class extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('category'); // e.g., 'Computer', 'Peripheral', 'Other'
+
+            // Enum untuk kategori aset laboratorium komputer
+            $table->enum('category', [
+                'Computer',
+                'Peripheral',
+                'Networking',
+                'Storage',
+                'Software',
+                'Furniture',
+                'Other',
+            ])->default('Other');
+
             $table->text('description')->nullable();
-            $table->unsignedInteger('total_quantity')->default(1);
-            $table->string('status')->default('Available'); // e.g., 'Available', 'Borrowed', 'Damaged'
-            
-            // Untuk EIS
-            $table->decimal('purchase_price', 15, 2)->nullable();
-            
+
+            // Enum untuk status aset
+            $table->enum('status', [
+                'Available',
+                'Borrowed',
+                'Damaged',
+            ])->default('Available');
+
+            $table->decimal('purchase_price', 15, 2)->nullable(); // Untuk keperluan EIS
+
             $table->timestamps();
             $table->softDeletes(); // Aset bisa di-nonaktifkan
         });

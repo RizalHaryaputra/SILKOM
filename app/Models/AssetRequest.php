@@ -15,8 +15,8 @@ class AssetRequest extends Model
     protected $fillable = [
         'requester_user_id',
         'asset_name',
-        'specifications',
         'reason',
+        'specification',
         'status',
     ];
 

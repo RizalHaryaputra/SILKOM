@@ -136,4 +136,9 @@ class BorrowingApprovalController extends Controller
         return redirect()->route('admin.borrow.requests.index')
             ->with('success', "Aset {$borrowing->asset->name} telah ditandai sebagai dikembalikan.");
     }
+
+    public function show(Borrowing $borrowing)
+    {
+        return view('admin.borrow.show', compact('borrowing'));
+    }
 }

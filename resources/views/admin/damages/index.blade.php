@@ -57,7 +57,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <p>Lapor Kerusakan</p>
+                            <p>Lapor</p>
                         </div>
                     </a>
                 </div>
@@ -70,7 +70,6 @@
                     <thead class="bg-gray-50 text-xs uppercase text-gray-500">
                         <tr>
                             <th class="px-4 py-3 text-left">Aset Rusak</th>
-                            <th class="px-4 py-3 text-left">Deskripsi</th>
                             <th class="px-4 py-3 text-left">Status Perbaikan</th>
                             <th class="px-4 py-3 text-left">Tanggal Lapor</th>
                             <th class="px-4 py-3 text-left">Biaya Perbaikan</th>
@@ -97,7 +96,7 @@
                                         {{-- Ikon fallback --}}
                                         <div class="flex h-full w-full items-center justify-center text-gray-400">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10.5 11.25h3M12 15h.008m-7.008 4.5h12.016a1.125 1.125 0 0 0 1.125-1.125V9.75M18.75 9.75h.375c.621 0 1.125.504 1.125 1.125v.375m-1.5-1.5V5.625c0-.621-.504-1.125-1.125-1.125H6.75c-.621 0-1.125.504-1.125 1.125v3.375c0 .621.504 1.125 1.125 1.125h.375m1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v.375m-1.5-1.5V5.625" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                                             </svg>
                                         </div>
                                         @endif
@@ -107,11 +106,6 @@
                                             title="{{ $damage->asset->name ?? 'Aset tidak ditemukan' }}">{{ $damage->asset->name ?? 'Aset tidak ditemukan' }}</div>
                                     </div>
                                 </div>
-                            </td>
-
-                            {{-- Kolom Deskripsi --}}
-                            <td class="px-4 py-3">
-                                <p class="truncate max-w-[300px] text-gray-500" title="{{ $damage->description }}">{{ $damage->description }}</p>
                             </td>
 
                             {{-- Kolom Status Perbaikan (dengan badge) --}}
@@ -144,6 +138,9 @@
                                 <div class="flex items-center justify-center gap-2">
                                     <a href="{{ route('admin.damages.edit', $damage) }}"
                                         class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition duration-150">Edit</a>
+
+                                    <a href="{{ route('admin.damages.show', $damage) }}"
+                                        class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150">Detail</a>
                                     
                                     <form action="{{ route('admin.damages.destroy', $damage) }}" method="POST"
                                         onsubmit="return openConfirmModal('Hapus laporan kerusakan untuk \'{{ $damage->asset->name }}\'?', this);">
@@ -158,7 +155,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="px-4 py-10 text-center text-gray-500">Belum ada laporan kerusakan.</td>
+                            <td colspan="5" class="px-4 py-10 text-center text-gray-500">Belum ada laporan kerusakan.</td>
                         </tr>
                         @endforelse
                     </tbody>

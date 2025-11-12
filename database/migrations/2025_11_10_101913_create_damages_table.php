@@ -13,12 +13,12 @@ return new class extends Migration
             $table->id();
             
             $table->foreignId('asset_id')->nullable()->constrained('assets')->nullOnDelete();
-            // admin_id adalah Admin Lab yang melapor [cite: 101]
+            // admin_id adalah Admin Lab yang melaporkan kerusakan
             $table->foreignId('reporter_admin_id')->nullable()->constrained('users')->nullOnDelete();
 
             $table->text('description');
             $table->date('reported_at');
-            $table->string('repair_status')->default('Reported'); // 'Reported', 'In Progress', 'Completed'
+            $table->enum('repair_status', ['Reported', 'In Progress', 'Completed'])->default('Reported'); // 'Reported', 'In Progress', 'Completed'
             
             // Untuk EIS
             $table->decimal('repair_cost', 15, 2)->default(0);

@@ -23,7 +23,7 @@ class UpdateDamageRequest extends FormRequest
             'damage_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
 
             // Ini adalah field penting untuk update
-            'repair_status' => 'required|string|in:Reported,In Progress,Completed',
+            'repair_status' => 'required|in:Reported,In Progress,Completed',
             'repair_cost' => 'nullable|numeric|min:0',
         ];
     }

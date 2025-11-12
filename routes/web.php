@@ -32,16 +32,10 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('damages', DamageController::class);
 
     // --- RUTE PERSETUJUAN PEMINJAMAN ---
-    // Halaman utama untuk melihat daftar permintaan
     Route::get('borrow-requests', [BorrowingApprovalController::class, 'index'])->name('borrow.requests.index');
-
-    // Aksi untuk Menyetujui
+    Route::get('borrow-requests/{borrowing}', [BorrowingApprovalController::class, 'show'])->name('borrow.requests.show');
     Route::put('borrow-requests/{borrowing}/approve', [BorrowingApprovalController::class, 'approve'])->name('borrow.requests.approve');
-
-    // Aksi untuk Menolak
     Route::put('borrow-requests/{borrowing}/reject', [BorrowingApprovalController::class, 'reject'])->name('borrow.requests.reject');
-
-    // Aksi untuk Menyelesaikan (Mengembalikan)
     Route::put('borrow-requests/{borrowing}/complete', [BorrowingApprovalController::class, 'complete'])->name('borrow.requests.complete');
 });
 

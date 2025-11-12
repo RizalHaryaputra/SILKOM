@@ -17,7 +17,6 @@ class Asset extends Model
         'category',
         'description',
         'asset_image_path',
-        'total_quantity',
         'status',
         'purchase_price',
     ];
