@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DamageController;
 use App\Http\Controllers\Lead\LeadDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Student\BorrowingController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'role:Staff'])->prefix('staff')->name('staff.')->grou
 // Route for Student
 Route::middleware(['auth', 'role:Student'])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('borrow', BorrowingController::class);
 });
 
 require __DIR__.'/auth.php';
