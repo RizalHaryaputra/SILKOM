@@ -7,6 +7,7 @@ use App\Models\Damage;
 use App\Models\Asset;
 use App\Http\Requests\StoreDamageRequest;
 use App\Http\Requests\UpdateDamageRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class DamageController extends Controller
@@ -17,7 +18,11 @@ class DamageController extends Controller
         // Tampilkan dengan relasi 'asset' agar bisa menampilkan nama aset
         $damages = Damage::with('asset')->latest()->paginate(10);
 
-        return view('admin.damages.index', compact('damages'));
+        if (Auth::user()->hasRole('Staff')) {
+            return view('staff.damages.index', compact('damages'));
+        } else {
+            return view('admin.damages.index', compact('damages'));
+        }
     }
 
     // Menampilkan form lapor kerusakan baru
@@ -26,7 +31,11 @@ class DamageController extends Controller
         // Ambil semua aset untuk ditampilkan di dropdown
         $assets = Asset::orderBy('name')->get();
 
-        return view('admin.damages.create', compact('assets'));
+        if (Auth::user()->rhasRole('Staff')) {
+            return view('admin.damages.create', compact('assets'));
+        } else {
+            return view('admin.damages.create', compact('assets'));
+        }
     }
 
     // Menyimpan laporan kerusakan baru
@@ -50,8 +59,13 @@ class DamageController extends Controller
         // Otomatis ubah status aset menjadi 'Damaged'
         $damage->asset()->update(['status' => 'Damaged']);
 
-        return redirect()->route('admin.damages.index')
-            ->with('success', 'Laporan kerusakan berhasil ditambahkan.');
+        if (Auth::user()->hasRole('Staff')) {
+            return redirect()->route('staff.damages.index')
+                ->with('success', 'Laporan kerusakan berhasil ditambahkan.');
+        } else {
+            return redirect()->route('admin.damages.index')
+                ->with('success', 'Laporan kerusakan berhasil ditambahkan.');
+        }
     }
 
     // Menampilkan form edit laporan kerusakan
@@ -60,7 +74,11 @@ class DamageController extends Controller
         // Ambil semua aset untuk dropdown
         $assets = Asset::orderBy('name')->get();
 
-        return view('admin.damages.edit', compact('damage', 'assets'));
+        if(Auth::user()->hasRole('Staff')) {
+            return view('staff.damages.edit', compact('damage', 'assets'));
+        } else {
+            return view('admin.damages.edit', compact('damage', 'assets'));
+        }
     }
 
     // Memperbarui laporan kerusakan
@@ -89,13 +107,22 @@ class DamageController extends Controller
             $damage->asset()->update(['status' => 'Damaged']);
         }
 
+        if(Auth::user()->hasRole('Staff')) {
+            return redirect()->route('staff.damages.index')
+                ->with('success', 'Laporan kerusakan berhasil diperbarui.');
+        } else {
         return redirect()->route('admin.damages.index')
             ->with('success', 'Laporan kerusakan berhasil diperbarui.');
+        }
     }
 
     public function show(Damage $damage)
     {
-        return view('admin.damages.show', compact('damage'));
+        if(Auth::user()->hasRole('Staff')) {
+            return view('staff.damages.show', compact('damage'));
+        } else {
+            return view('admin.damages.show', compact('damage'));
+        }
     }
 
     // Menghapus laporan kerusakan (Soft Delete)
@@ -105,7 +132,12 @@ class DamageController extends Controller
         // karena mungkin asetnya memang masih rusak.
         $damage->delete();
 
+        if(Auth::user()->hasRole('Staff')) {
+            return redirect()->route('staff.damages.index')
+                ->with('success', 'Laporan kerusakan berhasil dihapus.');
+        } else {
         return redirect()->route('admin.damages.index')
             ->with('success', 'Laporan kerusakan berhasil dihapus.');
+        }
     }
 }
