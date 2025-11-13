@@ -1,4 +1,4 @@
-<x-student-layout title="Detail Peminjaman Aset">
+<x-admin-layout title="Detail Peminjaman Aset">
 
     <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:px-8">
 
@@ -127,4 +127,4 @@
         </div>
     </div>
 
-</x-student-layout>
+</x-admin-layout>

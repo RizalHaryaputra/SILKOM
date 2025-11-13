@@ -1,4 +1,4 @@
-<x-admin-layout title="Kelola Kerusakan Aset">
+<x-staff-layout title="Kelola Kerusakan Aset">
 
     <section class="max-w-7xl mx-auto p-4 sm:p-6">
         {{-- Flash Messages --}}
@@ -29,7 +29,7 @@
                 
                 <div class="flex items-center gap-2">
                     {{-- Search Form --}}
-                    <form method="GET" action="{{ route('admin.damages.index') }}"
+                    <form method="GET" action="{{ route('staff.damages.index') }}"
                         class="flex items-center w-full md:w-80">
                         <div class="relative w-full">
                             <input type="text" name="q" value="{{ request('q') }}"
@@ -48,9 +48,8 @@
                         </button>
                     </form>
 
-                    @role('Staff')
                     {{-- Tombol Tambah --}}
-                    <a href="{{ route('admin.damages.create') }}">
+                    <a href="{{ route('staff.damages.create') }}">
                         <div
                             class="flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -61,7 +60,6 @@
                             <p>Lapor</p>
                         </div>
                     </a>
-                    @endrole
                 </div>
                 
             </div>
@@ -138,13 +136,13 @@
                             {{-- Kolom Aksi --}}
                             <td class="px-4 py-3 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="{{ route('admin.damages.edit', $damage) }}"
+                                    <a href="{{ route('staff.damages.edit', $damage) }}"
                                         class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition duration-150">Edit</a>
 
-                                    <a href="{{ route('admin.damages.show', $damage) }}"
+                                    <a href="{{ route('staff.damages.show', $damage) }}"
                                         class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150">Detail</a>
                                     
-                                    <form action="{{ route('admin.damages.destroy', $damage) }}" method="POST"
+                                    <form action="{{ route('staff.damages.destroy', $damage) }}" method="POST"
                                         onsubmit="return openConfirmModal('Hapus laporan kerusakan untuk \'{{ $damage->asset->name }}\'?', this);">
                                         @csrf @method('DELETE')
                                         <button type="submit"
@@ -215,4 +213,4 @@
     });
     </script>
     @endpush
-</x-admin-layout>
+</x-staff-layout>
