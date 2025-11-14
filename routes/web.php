@@ -23,11 +23,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 // Route for Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -88,6 +88,14 @@ Route::middleware(['auth', 'role:Student'])->prefix('student')->name('student.')
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::resource('borrow', BorrowingController::class);
     Route::get('computer-usage-history', [App\Http\Controllers\Student\ComputerUsageController::class, 'index'])->name('computer-usage.index');
+    // --- RUTE PENGATURAN PROFIL ---
+    Route::get('profile', [App\Http\Controllers\Student\ProfileController::class, 'edit'])->name('profile.edit');
+    
+    // Rute untuk form pertama (Profil & Kontak)
+    Route::patch('profile/details', [App\Http\Controllers\Student\ProfileController::class, 'updateDetails'])->name('profile.updateDetails');
+    
+    // Rute untuk form kedua (Password)
+    Route::patch('profile/password', [App\Http\Controllers\Student\ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
 
 require __DIR__ . '/auth.php';
