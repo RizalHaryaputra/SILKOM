@@ -31,8 +31,8 @@ class DamageController extends Controller
         // Ambil semua aset untuk ditampilkan di dropdown
         $assets = Asset::orderBy('name')->get();
 
-        if (Auth::user()->rhasRole('Staff')) {
-            return view('admin.damages.create', compact('assets'));
+        if (Auth::user()->hasRole('Staff')) {
+            return view('staff.damages.create', compact('assets'));
         } else {
             return view('admin.damages.create', compact('assets'));
         }

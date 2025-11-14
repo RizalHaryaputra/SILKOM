@@ -75,9 +75,9 @@
                             {{-- Kolom Nama Alat --}}
                             <td class="px-4 py-3">
                                 <div class="font-medium text-gray-900">{{ $request->asset_name }}</div>
-                                <div class="text-xs text-gray-500 truncate max-w-[25ch]"
+                                {{-- <div class="text-xs text-gray-500 truncate max-w-[25ch]"
                                     title="{{ $request->specifications }}">{{ $request->specifications ?? 'Tanpa
-                                    spesifikasi' }}</div>
+                                    spesifikasi' }}</div> --}}
                             </td>
 
                             {{-- Kolom Alasan --}}
@@ -120,11 +120,11 @@
                                         @csrf @method('DELETE')
                                         <button type="submit"
                                             class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 transition duration-150">
-                                            Hapus
+                                            Batal
                                         </button>
                                     </form>
                                     @else
-                                    <span class="text-gray-400 text-xs italic">Terkunci</span>
+
                                     @endif
                                 </div>
                             </td>

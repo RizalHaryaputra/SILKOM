@@ -8,7 +8,7 @@ class UpdateDamageRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->hasRole('Admin');
+        return $this->user()->hasAnyRole('Admin', 'Staff');
     }
 
     public function rules(): array
