@@ -87,6 +87,7 @@ Route::middleware(['auth', 'role:Staff'])->prefix('staff')->name('staff.')->grou
 Route::middleware(['auth', 'role:Student'])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::resource('borrow', BorrowingController::class);
+    Route::get('computer-usage-history', [App\Http\Controllers\Student\ComputerUsageController::class, 'index'])->name('computer-usage.index');
 });
 
 require __DIR__ . '/auth.php';
