@@ -89,6 +89,18 @@
                         </svg>
                         <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Log Komputer</span>
                     </a>
+
+                    <a href="{{ route('student.profile.edit') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('student.profile.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                        :class="sidebarCollapsed && 'justify-center'">
+                        <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Profil</span>
+                    </a>
                 </nav>
             </aside>
 
