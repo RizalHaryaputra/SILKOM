@@ -58,6 +58,8 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::put('asset-requests/{assetRequest}/approve', [AssetRequestApprovalController::class, 'approve'])->name('asset-requests.approve');
     Route::put('asset-requests/{assetRequest}/reject', [AssetRequestApprovalController::class, 'reject'])->name('asset-requests.reject');
     Route::get('asset-requests/{assetRequest}', [AssetRequestApprovalController::class, 'show'])->name('asset-requests.show');
+
+    Route::get('reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
 });
 
 // Route for Lead
