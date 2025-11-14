@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AssetController;
 use App\Http\Controllers\Admin\AssetRequestApprovalController;
 use App\Http\Controllers\Admin\BorrowingApprovalController;
 use App\Http\Controllers\Admin\DamageController;
+use App\Http\Controllers\Admin\KmsDocumentController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Staff\AssetRequestController;
 use App\Http\Controllers\Lead\LeadDashboardController;
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('assets', AssetController::class);
     Route::resource('damages', DamageController::class);
     Route::resource('users', UserManagementController::class);
+    Route::resource('kms-documents', KmsDocumentController::class);
 
     // Rute Persetujuan Peminjaman Aset
     Route::get('borrow-requests', [BorrowingApprovalController::class, 'index'])->name('borrow.requests.index');
