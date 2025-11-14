@@ -39,7 +39,7 @@
                 <div class="flex items-center px-5 py-6 shrink-0"
                     :class="sidebarCollapsed ? 'justify-center' : 'justify-between'">
                     <span class="font-bold text-lg text-white" x-show="!sidebarCollapsed" x-transition.opacity>
-                        SILKOM <span class="block text-xs font-normal">Admin Lab</span>
+                        SILKOM <span class="block text-xs font-normal">Admin</span>
                     </span>
                     <button @click="sidebarCollapsed = !sidebarCollapsed"
                         class="hidden lg:block text-gray-400 hover:text-white">
@@ -66,6 +66,18 @@
                         <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Dashboard</span>
                     </a>
 
+                    <a href="{{ route('admin.users.index') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.users.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                        :class="sidebarCollapsed && 'justify-center'">
+                        <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                        </svg>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Pengguna</span>
+                    </a>
+
                     <a href="{{ route('admin.assets.index') }}"
                         class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.assets.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
                         :class="sidebarCollapsed && 'justify-center'">
@@ -76,6 +88,44 @@
                                 d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" />
                         </svg>
                         <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Aset</span>
+                    </a>
+
+                    <a href="{{ route('admin.kms-documents.index') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.kms-documents.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                        :class="sidebarCollapsed && 'justify-center'">
+                        <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                        </svg>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Kms Dokumen</span>
+                    </a>
+
+                    <a href="{{ route('admin.borrow.requests.index') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.borrow.requests.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                        :class="sidebarCollapsed && 'justify-center'">
+                        <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                        </svg>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Peminjaman</span>
+                    </a>
+
+                    <a href="{{ route('admin.asset-requests.index') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.asset-requests.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                        :class="sidebarCollapsed && 'justify-center'">
+                        <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.867 19.125h.008v.008h-.008v-.008Z" />
+                        </svg>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Pengajuan</span>
                     </a>
 
                     <a href="{{ route('admin.damages.index') }}"
@@ -92,18 +142,20 @@
                         <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Kerusakan</span>
                     </a>
 
-                    <a href="{{ route('admin.borrow.requests.index') }}"
-                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.borrow.requests.index') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
+                    {{-- Computer Usage --}}
+                    <a href="{{ route('admin.computer-usage.index') }}"
+                        class="flex items-center px-3 py-2 rounded-md transition-colors duration-200 {{ request()->routeIs('admin.computer-usage.*') ? 'bg-blue-800 text-white' : 'hover:bg-blue-800 hover:text-white' }}"
                         :class="sidebarCollapsed && 'justify-center'">
                         <svg class="h-5 w-5 shrink-0" :class="!sidebarCollapsed && 'mr-3'"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="1.5"
-                                d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                                d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
                         </svg>
-                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Peminjaman</span>
-                    </a>
+                        <span class="whitespace-nowrap" x-show="!sidebarCollapsed" x-transition.fade>Log Komputer</span>
+                    </a>           
 
+                    
                 </nav>
             </aside>
 

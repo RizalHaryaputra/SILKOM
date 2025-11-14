@@ -7,6 +7,7 @@ use App\Models\ComputerUsage;
 use App\Models\User;
 use App\Models\Asset;
 use App\Http\Requests\StoreComputerUsageRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB; // <-- 1. TAMBAHKAN DB FACADE
 
 class ComputerUsageController extends Controller
@@ -18,7 +19,12 @@ class ComputerUsageController extends Controller
             ->latest()
             ->paginate(15);
 
-        return view('staff.computer-usage.index', compact('usages'));
+        if (Auth::user()->hasRole('Admin')) {
+            return view('admin.computer-usage.index', compact('usages'));
+        } else {
+
+            return view('staff.computer-usage.index', compact('usages'));
+        }
     }
 
     // ... method create() tidak berubah ...
@@ -31,7 +37,11 @@ class ComputerUsageController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('staff.computer-usage.create', compact('users', 'computers'));
+        if (Auth::user()->hasRole('Admin')) {
+            return view('admin.computer-usage.create', compact('users', 'computers'));
+        } else {
+            return view('staff.computer-usage.create', compact('users', 'computers'));
+        }
     }
 
     /**
@@ -57,12 +67,17 @@ class ComputerUsageController extends Controller
                 ->with('error', 'Gagal menyimpan log. Terjadi kesalahan server.');
         }
 
-        return redirect()->route('staff.computer-usage.index')
-            ->with('success', 'Log penggunaan komputer berhasil ditambahkan.');
+        if (Auth::user()->hasRole('Admin')) {
+            return redirect()->route('admin.computer-usage.index')
+                ->with('success', 'Log penggunaan komputer berhasil ditambahkan.');
+        } else {
+            return redirect()->route('staff.computer-usage.index')
+                ->with('success', 'Log penggunaan komputer berhasil ditambahkan.');
+        }
     }
 
     /**
-     * 4. METODE BARU: Menyelesaikan sesi penggunaan komputer.
+     * Menyelesaikan sesi penggunaan komputer.
      */
     public function finish(ComputerUsage $computerUsage)
     {
@@ -95,8 +110,13 @@ class ComputerUsageController extends Controller
                 ->with('error', 'Gagal menyelesaikan sesi. Terjadi kesalahan server.');
         }
 
-        return redirect()->route('staff.computer-usage.index')
-            ->with('success', "Sesi untuk {$computerUsage->asset->name} berhasil diselesaikan.");
+        if (Auth::user()->hasRole('Admin')) {
+            return redirect()->route('admin.computer-usage.index')
+                ->with('success', "Sesi untuk {$computerUsage->asset->name} berhasil diselesaikan.");
+        } else {
+            return redirect()->route('staff.computer-usage.index')
+                ->with('success', "Sesi untuk {$computerUsage->asset->name} berhasil diselesaikan.");
+        }
     }
 
     public function destroy(ComputerUsage $computerUsage)
@@ -117,7 +137,21 @@ class ComputerUsageController extends Controller
                 ->with('error', 'Gagal menghapus log. Terjadi kesalahan server.');
         }
 
-        return redirect()->route('staff.computer-usage.index')
-            ->with('success', 'Log penggunaan komputer berhasil dihapus.');
+        if (Auth::user()->hasRole('Admin')) {
+            return redirect()->route('admin.computer-usage.index')
+                ->with('success', 'Log penggunaan komputer berhasil dihapus.');
+        } else {
+            return redirect()->route('staff.computer-usage.index')
+                ->with('success', 'Log penggunaan komputer berhasil dihapus.');
+        }
+    }
+
+    public function show(ComputerUsage $computerUsage)
+    {
+        if (Auth::user()->hasRole('Admin')) {
+            return view('admin.computer-usage.show', compact('computerUsage'));
+        } else {
+            return view('staff.computer-usage.show', compact('computerUsage'));
+        }
     }
 }

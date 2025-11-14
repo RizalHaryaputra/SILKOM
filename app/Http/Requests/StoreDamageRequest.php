@@ -8,8 +8,8 @@ class StoreDamageRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Hanya Admin Lab yang bisa melaporkan kerusakan
-        return $this->user()->hasRole('Admin');
+        // Hanya Admin dan Staff yang bisa melaporkan kerusakan
+        return $this->user()->hasAnyRole('Admin', 'Staff');
     }
 
     public function rules(): array

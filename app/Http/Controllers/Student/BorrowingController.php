@@ -37,15 +37,15 @@ class BorrowingController extends Controller
 
     public function store(StoreBorrowingRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->validated(); // Ini sekarang akan menyertakan 'purpose'
 
         // Buat data peminjaman
         $borrowing = Borrowing::create([
             'user_id' => auth()->id(),
             'asset_id' => $data['asset_id'],
             'borrowed_at' => $data['borrowed_at'],
-            'purpose' => $data['purpose'],
-            'status' => 'Pending', // <-- Status awal
+            'purpose' => $data['purpose'], // Ini sekarang aman
+            'status' => 'Pending',
         ]);
 
         // === KIRIM NOTIFIKASI KE ADMIN (OAS) ===
@@ -72,9 +72,9 @@ class BorrowingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Borrowing $borrow)
     {
-        //
+
     }
 
     /**
@@ -88,8 +88,25 @@ class BorrowingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Borrowing $borrow)
     {
-        //
+        // 1. Otorisasi: Pastikan mahasiswa ini yang punya request
+        if (auth()->id() !== $borrow->user_id) {
+            abort(403, 'Anda tidak berhak membatalkan permintaan ini.');
+        }
+
+        // 2. Logika Bisnis: Hanya bisa dibatalkan jika statusnya masih 'Pending'
+        if ($borrow->status !== 'Pending') {
+            return redirect()->route('student.borrow.index')
+                ->with('error', 'Permintaan ini sudah diproses dan tidak dapat dibatalkan.');
+        }
+
+        // 3. Hapus request (ini akan soft delete jika Anda setup di model,
+        //    atau hard delete jika tidak. Keduanya valid untuk pembatalan.)
+        $borrow->delete();
+
+        // 4. Redirect kembali
+        return redirect()->route('student.borrow.index')
+            ->with('success', 'Permintaan peminjaman telah berhasil dibatalkan.');
     }
 }
