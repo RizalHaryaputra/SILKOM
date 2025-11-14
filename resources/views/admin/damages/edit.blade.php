@@ -30,7 +30,7 @@
                                 </svg>
                                 Aset yang Rusak
                             </label>
-                            <select id="asset_id" name="asset_id" required
+                            <select id="asset_id" name="asset_id" required disabled value="{{ old('asset_id', $damage->asset_id) }}"
                                 class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900">
                                 <option value="">-- Pilih Aset --</option>
                                 @foreach($assets as $asset)
@@ -39,6 +39,8 @@
                                     </option>
                                 @endforeach
                             </select>
+
+                            <input type="hidden" name="asset_id" value="{{ $damage->asset_id }}">
                             @error('asset_id')
                             <div class="flex items-center mt-2 text-red-600 text-sm">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -55,7 +57,7 @@
                                 </svg>
                                 Tanggal Laporan
                             </label>
-                            <input type="date" id="reported_at" name="reported_at" required
+                            <input type="date" id="reported_at" name="reported_at" required readonly
                                 class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
                                 value="{{ old('reported_at', $damage->reported_at->format('Y-m-d')) }}">
                             @error('reported_at')
@@ -74,7 +76,7 @@
                             Deskripsi Kerusakan
                         </label>
                         <textarea id="description" name="description" rows="5"
-                            placeholder="Jelaskan detail kerusakan..." required
+                            placeholder="Jelaskan detail kerusakan..." required readonly
                             class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900 placeholder:text-gray-400 resize-vertical">{{ old('description', $damage->description) }}</textarea>
                         @error('description')
                         <div class="flex items-center mt-2 text-red-600 text-sm">
@@ -152,7 +154,7 @@
                         </div>
                         @endif
 
-                        <input type="file" id="damage_image" name="damage_image" accept="image/*"
+                        <input type="file" id="damage_image" name="damage_image" accept="image/*" disabled value="{{ old('damage_image') }}"
                             class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:transition-colors">
                         <p class="text-xs text-gray-500 mt-2">Kosongkan jika tidak ingin mengganti gambar.</p>
                         @error('damage_image')

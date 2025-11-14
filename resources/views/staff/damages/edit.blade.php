@@ -110,6 +110,8 @@
                             @enderror
                         </div>
 
+                        <input type="hidden" name="repair_status" value="{{ $damage->repair_status }}">
+
                         {{-- Biaya Perbaikan (untuk EIS) --}}
                         <div class="space-y-2">
                             <label for="repair_cost" class="flex items-center text-sm font-semibold text-gray-700">

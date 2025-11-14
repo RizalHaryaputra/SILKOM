@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('approver_admin_id')->nullable()->constrained('users')->nullOnDelete();
 
             $table->text('purpose')->nullable();
-            $table->dateTime('borrowed_at');
+            $table->dateTime('borrowed_at');    
             $table->dateTime('returned_at')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Completed'])->default('Pending'); // 'Pending', 'Approved', 'Rejected', 'Completed'
 

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AssetController;
+use App\Http\Controllers\Admin\AssetRequestApprovalController;
 use App\Http\Controllers\Admin\BorrowingApprovalController;
 use App\Http\Controllers\Admin\DamageController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Staff\AssetRequestController;
 use App\Http\Controllers\Lead\LeadDashboardController;
 use App\Http\Controllers\ProfileController;
@@ -32,8 +34,9 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('assets', AssetController::class);
     Route::resource('damages', DamageController::class);
+    Route::resource('users', UserManagementController::class);
 
-    // RUTE PERSETUJUAN PEMINJAMAN 
+    // Rute Persetujuan Peminjaman Aset
     Route::get('borrow-requests', [BorrowingApprovalController::class, 'index'])->name('borrow.requests.index');
     Route::get('borrow-requests/{borrowing}', [BorrowingApprovalController::class, 'show'])->name('borrow.requests.show');
     Route::put('borrow-requests/{borrowing}/approve', [BorrowingApprovalController::class, 'approve'])->name('borrow.requests.approve');
@@ -46,6 +49,13 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('computer-usage/history', [ComputerUsageController::class, 'index'])->name('computer-usage.index');
     Route::patch('computer-usage/{computerUsage}/finish', [ComputerUsageController::class, 'finish'])->name('computer-usage.finish');
     Route::delete('computer-usage/{computerUsage}', [ComputerUsageController::class, 'destroy'])->name('computer-usage.destroy');
+    Route::get('computer-usage/{computerUsage}', [ComputerUsageController::class, 'show'])->name('computer-usage.show');
+
+    // Rute untuk Persetujuan Pengajuan Aset
+    Route::get('asset-requests', [AssetRequestApprovalController::class, 'index'])->name('asset-requests.index');
+    Route::put('asset-requests/{assetRequest}/approve', [AssetRequestApprovalController::class, 'approve'])->name('asset-requests.approve');
+    Route::put('asset-requests/{assetRequest}/reject', [AssetRequestApprovalController::class, 'reject'])->name('asset-requests.reject');
+    Route::get('asset-requests/{assetRequest}', [AssetRequestApprovalController::class, 'show'])->name('asset-requests.show');
 });
 
 // Route for Lead
@@ -66,6 +76,7 @@ Route::middleware(['auth', 'role:Staff'])->prefix('staff')->name('staff.')->grou
     Route::get('computer-usage/history', [ComputerUsageController::class, 'index'])->name('computer-usage.index');
     Route::patch('computer-usage/{computerUsage}/finish', [ComputerUsageController::class, 'finish'])->name('computer-usage.finish');
     Route::delete('computer-usage/{computerUsage}', [ComputerUsageController::class, 'destroy'])->name('computer-usage.destroy');
+    Route::get('computer-usage/{computerUsage}', [ComputerUsageController::class, 'show'])->name('computer-usage.show');
 
     Route::resource('damages', DamageController::class);
 

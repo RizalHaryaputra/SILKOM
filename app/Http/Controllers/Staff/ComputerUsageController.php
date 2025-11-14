@@ -145,4 +145,13 @@ class ComputerUsageController extends Controller
                 ->with('success', 'Log penggunaan komputer berhasil dihapus.');
         }
     }
+
+    public function show(ComputerUsage $computerUsage)
+    {
+        if (Auth::user()->hasRole('Admin')) {
+            return view('admin.computer-usage.show', compact('computerUsage'));
+        } else {
+            return view('staff.computer-usage.show', compact('computerUsage'));
+        }
+    }
 }

@@ -136,23 +136,8 @@
                                     @endrole
 
                                     @role('Admin')
-                                    @if(!$usage->finished_at)
-                                    {{-- Tidak ada aksi --}}
-                                    <span
-                                        class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-gray-500 bg-gray-200 cursor-not-allowed">
-                                        Sedang Digunakan
-                                    </span>
-                                    @else
-                                    <form action="{{ route('admin.computer-usage.destroy', $usage) }}" method="POST"
-                                        onsubmit="return openConfirmModal('Hapus log ini secara permanen?', this, 'reject');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 transition duration-150">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                    @endif
+                                    <a href="{{ route('admin.computer-usage.show', $usage) }}"
+                                        class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150">Detail</a>
                                     @endrole
                                 </div>
                             </td>

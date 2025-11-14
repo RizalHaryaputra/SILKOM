@@ -99,6 +99,8 @@
 
                             <td class="px-4 py-3 text-center">
                                 <div class="flex items-center justify-center gap-2">
+                                    <a href="{{ route('staff.computer-usage.show', $usage) }}"
+                                    class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150">Detail</a>
                                     @if(!$usage->finished_at)
                                         {{-- Tombol Selesaikan (Form 1) --}}
                                         <form action="{{ route('staff.computer-usage.finish', $usage) }}" method="POST"
@@ -112,7 +114,7 @@
                                         </form>
                                     @else
                                         {{-- Tombol Hapus (Form 2) --}}
-                                        <form action="{{ route('staff.computer-usage.destroy', $usage) }}" method="POST"
+                                        {{-- <form action="{{ route('staff.computer-usage.destroy', $usage) }}" method="POST"
                                             onsubmit="return openConfirmModal('Hapus log ini secara permanen?', this, 'reject');">
                                             @csrf
                                             @method('DELETE')
@@ -120,7 +122,7 @@
                                                 class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 transition duration-150">
                                                 Hapus
                                             </button>
-                                        </form>
+                                        </form> --}}
                                     @endif
                                 </div>
                             </td>
