@@ -151,13 +151,12 @@ Semua akun *default* yang dibuat oleh `UserSeeder` menggunakan *password*: **`pa
 * **Admin Lab:** `admin@lab.com`
 * **Staff:** `staff@lab.com`
 * **Mahasiswa (Student):** (Gunakan akun tim Anda atau buat baru melalui halaman registrasi)
-    * `rizal.23051130013@student.uny.ac.id`
-    * `nabila.23051130020@student.uny.ac.id`
+    * `rizalharyaputra.2023@student.uny.ac.id`
     * (dan akun tim lainnya...)
 
 ---
 
-## 👨‍💻 Tim Pengembang (MSI.pdf)
+## 👨‍💻 Tim Pengembang
 
 * **Rizal Haryaputra** (23051130013)
 * **Nabila Putri Aulaya Syifa** (23051130020)
