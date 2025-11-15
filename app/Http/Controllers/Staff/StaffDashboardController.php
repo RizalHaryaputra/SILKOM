@@ -3,63 +3,30 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Asset;
+use App\Models\ComputerUsage;
+use App\Models\Damage;
 
 class StaffDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('staff.dashboard');
-    }
+        // 1. KPI: Kesehatan Lab Komputer
+        $availableAssets = Asset::where('status', 'Available')->count();
+        $borrowedAssets = Asset::where('status', 'Borrowed')->count();
+        $damagedAssets = Asset::where('status', 'Damaged')->count();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // 2. PERBARUI: Ambil 5 log penggunaan komputer terbaru
+        $recentUsages = ComputerUsage::with(['user.studentProfile', 'asset'])
+            ->latest()
+            ->take(5)
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('staff.dashboard', compact(
+            'availableAssets',
+            'borrowedAssets',
+            'damagedAssets',
+            'recentUsages'
+        ));
     }
 }
