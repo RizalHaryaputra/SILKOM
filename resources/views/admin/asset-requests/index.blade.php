@@ -44,11 +44,11 @@
                         <tr class="hover:bg-blue-50/50 transition duration-100">
                             {{-- Kolom Pemohon --}}
                             <td class="px-4 py-3">
-                                <div class="font-medium text-gray-900">{{ $request->requester->name }}</div>
+                                <div class="font-medium text-gray-900">{{ $request->requester_user->name }}</div>
                                 {{-- Menampilkan role atau NIM --}}
                                 <div class="text-xs text-gray-500">
-                                    {{ $request->requester->studentProfile->student_id_number ??
-                                    $request->requester->getRoleNames()->first() }}
+                                    {{ $request->requester_user->studentProfile->student_id_number ??
+                                    $request->requester_user->getRoleNames()->first() }}
                                 </div>
                             </td>
                             {{-- Kolom Nama Alat --}}
@@ -128,11 +128,11 @@
                         <tr class="hover:bg-blue-50/50 transition duration-100">
                             {{-- Kolom Pemohon --}}
                             <td class="px-4 py-3">
-                                <div class="font-medium text-gray-900">{{ $request->requester->name ?? 'User Dihapus' }}
+                                <div class="font-medium text-gray-900">{{ $request->requester_user->name ?? 'User Dihapus' }}
                                 </div>
                                 <div class="text-xs text-gray-500">
-                                    {{ $request->requester->studentProfile->student_id_number ??
-                                    ($request->requester->getRoleNames()->first() ?? '-') }}
+                                    {{ $request->requester_user->studentProfile->student_id_number ??
+                                    ($request->requester_user->getRoleNames()->first() ?? '-') }}
                                 </div>
                             </td>
                             {{-- Kolom Nama Alat --}}

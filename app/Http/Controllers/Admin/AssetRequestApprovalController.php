@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssetRequest;
-use App\Notifications\AssetRequestStatusUpdated;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AssetRequestStatusUpdatedStaffMail;
 use Illuminate\Http\Request;
 
 class AssetRequestApprovalController extends Controller
@@ -15,13 +16,13 @@ class AssetRequestApprovalController extends Controller
     public function index()
     {
         // Permintaan Masuk (Pending)
-        $pendingRequests = AssetRequest::with('requester') 
+        $pendingRequests = AssetRequest::with('requester_user') 
             ->where('status', 'Pending')
             ->latest()
             ->get();
 
         // Riwayat (Selesai atau Ditolak)
-        $historyRequests = AssetRequest::with('requester')
+        $historyRequests = AssetRequest::with('requester_user')
             ->whereIn('status', ['Approved', 'Rejected'])
             ->latest()
             ->paginate(10);
@@ -43,14 +44,11 @@ class AssetRequestApprovalController extends Controller
                 ->with('error', 'Aksi tidak valid. Permintaan ini sudah diproses.');
         }
 
-        // 1. Update status
         $assetRequest->update([
             'status' => 'Approved',
         ]);
 
-        // 2. Kirim notifikasi ke pembuat request (Staff)
-        // Pastikan Anda mengaktifkan ini jika sudah siap
-        // $assetRequest->requester_user->notify(new AssetRequestStatusUpdated($assetRequest));
+        Mail::to($assetRequest->requester_user)->send(new AssetRequestStatusUpdatedStaffMail($assetRequest));
 
         return redirect()->route('admin.asset-requests.index')
             ->with('success', "Pengajuan untuk {$assetRequest->asset_name} telah disetujui.");
@@ -67,13 +65,11 @@ class AssetRequestApprovalController extends Controller
                 ->with('error', 'Aksi tidak valid. Permintaan ini sudah diproses.');
         }
 
-        // 1. Update status
         $assetRequest->update([
             'status' => 'Rejected',
         ]);
 
-        // 2. Kirim notifikasi ke pembuat request (Staff)
-        // $assetRequest->requester_user->notify(new AssetRequestStatusUpdated($assetRequest));
+        Mail::to($assetRequest->requester_user)->send(new AssetRequestStatusUpdatedStaffMail($assetRequest));
 
         return redirect()->route('admin.asset-requests.index')
             ->with('success', "Pengajuan untuk {$assetRequest->asset_name} telah ditolak.");
