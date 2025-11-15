@@ -53,12 +53,12 @@ class AssetController extends Controller
 
         // Logika Update Gambar (Hapus yang lama jika ada yang baru)
         if ($request->hasFile('asset_image')) {
-            // 1. Hapus gambar lama jika ada
+            // Hapus gambar lama jika ada
             if ($asset->asset_image_path) {
                 Storage::disk('public')->delete($asset->asset_image_path);
             }
 
-            // 2. Upload gambar baru
+            // Upload gambar baru
             $path = $request->file('asset_image')->store('assets', 'public');
             $data['asset_image_path'] = $path;
         }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssetRequest;
-use App\Notifications\AssetRequestStatusUpdated; // <-- Impor Notifikasi
+use App\Notifications\AssetRequestStatusUpdated;
 use Illuminate\Http\Request;
 
 class AssetRequestApprovalController extends Controller
@@ -14,19 +14,17 @@ class AssetRequestApprovalController extends Controller
      */
     public function index()
     {
-        // 1. Permintaan Masuk (Pending)
-        // PERBAIKAN: Menghapus '.studentProfile' karena pemohon pasti 'Staff'
+        // Permintaan Masuk (Pending)
         $pendingRequests = AssetRequest::with('requester') 
             ->where('status', 'Pending')
             ->latest()
             ->get();
 
-        // 2. Riwayat (Selesai atau Ditolak)
-        // PERBAIKAN: Menghapus '.studentProfile'
+        // Riwayat (Selesai atau Ditolak)
         $historyRequests = AssetRequest::with('requester')
             ->whereIn('status', ['Approved', 'Rejected'])
             ->latest()
-            ->paginate(10); // Riwayat bisa dipaginasi
+            ->paginate(10);
 
         return view('admin.asset-requests.index', compact(
             'pendingRequests',

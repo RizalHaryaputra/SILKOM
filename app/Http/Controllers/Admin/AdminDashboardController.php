@@ -4,26 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Borrowing;
-use App\Models\AssetRequest; // <-- PASTIKAN INI DI-IMPORT
+use App\Models\AssetRequest;
 use App\Models\Asset;
 
 class AdminDashboardController extends Controller
 {
     public function index()
     {
-        // 1. KPI: Tugas Mendesak
+        // KPI: Tugas Mendesak
         $pendingBorrowingsCount = Borrowing::where('status', 'Pending')->count();
         $pendingAssetRequestsCount = AssetRequest::where('status', 'Pending')->count(); // <-- Anda sudah punya ini
         $damagedAssetsCount = Asset::where('status', 'Damaged')->count();
 
-        // 2. Tabel: 5 Peminjaman Pending Teratas
+        // Tabel: 5 Peminjaman Pending Teratas
         $topPendingBorrowings = Borrowing::with(['user', 'asset'])
             ->where('status', 'Pending')
             ->latest()
             ->take(5)
             ->get();
 
-        // 3. (BARU) Tabel: 5 Pengajuan Alat Pending Teratas
+        // Tabel: 5 Pengajuan Alat Pending Teratas
         $topPendingAssetRequests = AssetRequest::with('requester_user')
             ->where('status', 'Pending')
             ->latest()
@@ -35,7 +35,7 @@ class AdminDashboardController extends Controller
             'pendingAssetRequestsCount',
             'damagedAssetsCount',
             'topPendingBorrowings',
-            'topPendingAssetRequests' // <-- TAMBAHKAN VARIABEL BARU INI
+            'topPendingAssetRequests'
         ));
     }
 }
