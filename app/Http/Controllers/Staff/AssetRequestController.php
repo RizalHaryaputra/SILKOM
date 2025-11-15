@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Staff;
 use App\Models\AssetRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAssetRequestRequest;
-use Illuminate\Http\Request; // <-- TAMBAHKAN INI
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewAssetRequestAdminMail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate; // <-- TAMBAHKAN INI
+use Illuminate\Support\Facades\Gate;
 
 class AssetRequestController extends Controller
 {
-    // ... method index(), create(), store() tidak berubah ...
-
     /**
      * Menampilkan riwayat pengajuan alat oleh user yang login.
      */
@@ -42,21 +43,25 @@ class AssetRequestController extends Controller
         $data = $request->validated();
         $data['requester_user_id'] = auth()->id();
         $data['status'] = 'Pending';
-        AssetRequest::create($data);
+
+        $assetRequest = AssetRequest::create($data); 
+
+        $admins = User::role('Admin')->get();
+        if ($admins->isNotEmpty()) {
+            Mail::to($admins)->send(new NewAssetRequestAdminMail($assetRequest));
+        }
+
         $route = auth()->user()->hasRole('Staff') ? 'staff.asset-requests.index' : 'student.asset-requests.index';
         return redirect()->route($route)
             ->with('success', 'Pengajuan alat baru berhasil dikirim.');
     }
 
-    // --- METHOD BARU DI BAWAH INI ---
 
     /**
      * Menampilkan form untuk mengedit pengajuan.
      */
     public function edit(AssetRequest $assetRequest)
     {
-        // Otorisasi: Pastikan user hanya mengedit request miliknya
-        // DAN statusnya masih 'Pending'
         if (auth()->id() !== $assetRequest->requester_user_id) {
             abort(403, 'Anda tidak berhak mengakses halaman ini.');
         }

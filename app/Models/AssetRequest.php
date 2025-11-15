@@ -23,7 +23,7 @@ class AssetRequest extends Model
     /**
      * Relasi ke user yang mengajukan.
      */
-    public function requester(): BelongsTo
+    public function requester_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'requester_user_id');
     }
