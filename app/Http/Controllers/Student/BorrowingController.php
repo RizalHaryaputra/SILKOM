@@ -7,9 +7,9 @@ use App\Http\Requests\StoreBorrowingRequest;
 use App\Models\Asset;
 use App\Models\Borrowing;
 use App\Models\User;
-use App\Notifications\NewBorrowingRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewBorrowingRequestAdminMail;
 
 class BorrowingController extends Controller
 {
@@ -51,9 +51,8 @@ class BorrowingController extends Controller
         // === KIRIM NOTIFIKASI KE ADMIN (OAS) ===
         $admins = User::role('Admin')->get();
 
-        // Kirim notifikasi ke mereka (via email)
         if ($admins->isNotEmpty()) {
-            Notification::send($admins, new NewBorrowingRequest($borrowing));
+            Mail::to($admins)->send(new NewBorrowingRequestAdminMail($borrowing));
         }
 
         return redirect()->route('student.borrow.index')
@@ -72,10 +71,7 @@ class BorrowingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Borrowing $borrow)
-    {
-
-    }
+    public function edit(Borrowing $borrow) {}
 
     /**
      * Update the specified resource in storage.

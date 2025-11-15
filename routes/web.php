@@ -15,7 +15,18 @@ use App\Http\Controllers\Staff\ComputerUsageController;
 use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Student\BorrowingController;
 use App\Http\Controllers\Student\StudentDashboardController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/send-test-email', function () {
+    Mail::raw('Ini adalah pesan email dari Laravel tanpa view.', function ($message) {
+        $message->to('rzlhryptr@email.com')
+                ->subject('Email Tanpa View');
+    });
+
+    return 'Email berhasil dikirim!';
+});
+
 
 // Front page route
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
