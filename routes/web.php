@@ -60,6 +60,8 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('asset-requests/{assetRequest}', [AssetRequestApprovalController::class, 'show'])->name('asset-requests.show');
 
     Route::get('reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+
+    // Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 });
 
 // Route for Lead
