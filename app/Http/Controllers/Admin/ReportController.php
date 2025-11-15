@@ -11,6 +11,7 @@ use App\Models\ComputerUsage;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -20,17 +21,17 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         // --- 1. Ambil Filter dari Request ---
-        
+
         // Tetapkan jenis laporan default jika tidak ada
         $reportType = $request->input('report_type', 'asset_summary');
-        
+
         // Tetapkan rentang tanggal default (1 bulan terakhir)
-        $startDate = $request->input('start_date') 
-            ? Carbon::parse($request->input('start_date')) 
+        $startDate = $request->input('start_date')
+            ? Carbon::parse($request->input('start_date'))
             : Carbon::now()->subMonth();
-            
-        $endDate = $request->input('end_date') 
-            ? Carbon::parse($request->input('end_date')) 
+
+        $endDate = $request->input('end_date')
+            ? Carbon::parse($request->input('end_date'))
             : Carbon::now();
 
         // Variabel untuk menampung data dan judul
@@ -38,13 +39,13 @@ class ReportController extends Controller
         $title = "";
 
         // --- 2. Jalankan Kueri berdasarkan Jenis Laporan ---
-        
+
         switch ($reportType) {
             case 'asset_summary':
                 $title = "Laporan Ringkasan Aset (Sering Rusak/Pinjam)";
                 $data = $this->getAssetSummaryReport($startDate, $endDate);
                 break;
-            
+
             case 'cost_analysis':
                 $title = "Laporan Analisis Biaya Perbaikan";
                 $data = $this->getCostAnalysisReport($startDate, $endDate);
@@ -62,13 +63,24 @@ class ReportController extends Controller
         }
 
         // --- 3. Kirim Data ke View ---
-        return view('admin.reports.index', compact(
-            'data',         // Data hasil kueri
-            'title',        // Judul laporan
-            'reportType',   // Untuk menandai filter yg aktif
-            'startDate',    // Untuk mengisi value filter
-            'endDate'       // Untuk mengisi value filter
-        ));
+
+        if (Auth::user()->hasRole('Lead')) {
+            return view('lead.reports', compact(
+                'data',         // Data hasil kueri
+                'title',        // Judul laporan
+                'reportType',   // Untuk menandai filter yg aktif
+                'startDate',    // Untuk mengisi value filter
+                'endDate'       // Untuk mengisi value filter
+            ));
+        } else {
+            return view('admin.reports.index', compact(
+                'data',         // Data hasil kueri
+                'title',        // Judul laporan
+                'reportType',   // Untuk menandai filter yg aktif
+                'startDate',    // Untuk mengisi value filter
+                'endDate'       // Untuk mengisi value filter
+            ));
+        }
     }
 
     /**
@@ -80,9 +92,9 @@ class ReportController extends Controller
             'borrowings' => fn($q) => $q->whereBetween('borrowed_at', [$start, $end]),
             'damages' => fn($q) => $q->whereBetween('reported_at', [$start, $end])
         ])
-        ->orderBy('damages_count', 'desc')
-        ->orderBy('borrowings_count', 'desc')
-        ->get();
+            ->orderBy('damages_count', 'desc')
+            ->orderBy('borrowings_count', 'desc')
+            ->get();
     }
 
     /**
@@ -128,7 +140,7 @@ class ReportController extends Controller
             // Hitung total 'repair_cost' dalam rentang tanggal
             'damages' => fn($q) => $q->whereBetween('reported_at', [$start, $end])
         ], 'repair_cost')
-        ->orderBy('damages_sum_repair_cost', 'desc')
-        ->get();
+            ->orderBy('damages_sum_repair_cost', 'desc')
+            ->get();
     }
 }
