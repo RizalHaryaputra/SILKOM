@@ -113,18 +113,19 @@
                             {{-- Aksi Cepat --}}
                             <td class="px-4 py-3 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    {{-- Tombol Approve (Form) --}}
+                                    {{-- PERBAIKAN: Tambahkan onsubmit() --}}
                                     <form action="{{ route('admin.borrow.requests.approve', $borrowing) }}"
-                                        method="POST">
+                                        method="POST"
+                                        onsubmit="return openConfirmModal('Setujui peminjaman \'{{ $borrowing->asset->name }}\'?', this, 'approve');">
                                         @csrf @method('PUT')
                                         <button type="submit"
                                             class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-green-600 hover:bg-green-700 transition duration-150">
                                             Approve
                                         </button>
                                     </form>
-                                    {{-- Tombol Reject (Form) --}}
-                                    <form action="{{ route('admin.borrow.requests.reject', $borrowing) }}"
-                                        method="POST">
+                                    {{-- PERBAIKAN: Tambahkan onsubmit() --}}
+                                    <form action="{{ route('admin.borrow.requests.reject', $borrowing) }}" method="POST"
+                                        onsubmit="return openConfirmModal('Tolak peminjaman \'{{ $borrowing->asset->name }}\'?', this, 'reject');">
                                         @csrf @method('PUT')
                                         <button type="submit"
                                             class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 transition duration-150">
@@ -145,7 +146,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-md p-6 mt-8"> {{-- Tambahkan margin top 'mt-8' --}}
+        <div class="bg-white rounded-xl shadow-md p-6 mt-8">
 
             {{-- Toolbar --}}
             <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
@@ -191,16 +192,18 @@
                             {{-- Aksi Cepat --}}
                             <td class="px-4 py-3 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    {{-- Tombol Approve (Form) --}}
-                                    <form action="{{ route('admin.asset-requests.approve', $request) }}" method="POST">
+                                    {{-- PERBAIKAN: Tambahkan onsubmit() --}}
+                                    <form action="{{ route('admin.asset-requests.approve', $request) }}" method="POST"
+                                        onsubmit="return openConfirmModal('Setujui pengajuan \'{{ $request->asset_name }}\'?', this, 'approve');">
                                         @csrf @method('PUT')
                                         <button type="submit"
                                             class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-green-600 hover:bg-green-700 transition duration-150">
                                             Approve
                                         </button>
                                     </form>
-                                    {{-- Tombol Reject (Form) --}}
-                                    <form action="{{ route('admin.asset-requests.reject', $request) }}" method="POST">
+                                    {{-- PERBAIKAN: Tambahkan onsubmit() --}}
+                                    <form action="{{ route('admin.asset-requests.reject', $request) }}" method="POST"
+                                        onsubmit="return openConfirmModal('Tolak pengajuan \'{{ $request->asset_name }}\'?', this, 'reject');">
                                         @csrf @method('PUT')
                                         <button type="submit"
                                             class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 transition duration-150">
@@ -279,6 +282,19 @@
             </div>
         </div>
 
+        <div id="confirmModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Konfirmasi Tindakan</h3>
+                <p id="confirmMessage" class="text-sm text-gray-700 mb-6"></p>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeConfirmModal()"
+                        class="rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-50">Batal</button>
+                    <button id="confirmSubmitBtn" type="button"
+                        class="rounded-lg px-3 py-2 text-sm font-semibold text-white">Ya</button>
+                </div>
+            </div>
+        </div>
+
         {{-- Flash Message (jika ada error otorisasi dari tombol approve/reject) --}}
         @if(session('error'))
         <div class="mt-6 rounded-xl bg-red-50 px-4 py-3 text-red-700 border border-red-200 font-medium">{{
@@ -287,8 +303,51 @@
 
     </section>
 
-    {{-- Modal JS (jika diperlukan untuk aksi di masa depan) --}}
     @push('scripts')
-    {{-- Tidak perlu modal JS untuk form submit standar --}}
+    <script>
+        let _pendingForm = null;
+        const confirmBtn = document.getElementById('confirmSubmitBtn');
+
+        function openConfirmModal(message, formEl, type = 'approve') {
+            _pendingForm = formEl;
+            document.getElementById('confirmMessage').textContent = message;
+
+            // Reset kelas tombol
+            confirmBtn.className = 'rounded-lg px-3 py-2 text-sm font-semibold text-white';
+            confirmBtn.disabled = false;
+
+            // Sesuaikan tombol berdasarkan tipe aksi
+            switch (type) {
+                case 'approve':
+                    confirmBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                    confirmBtn.textContent = 'Ya, Setujui';
+                    break;
+                case 'reject':
+                    confirmBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+                    confirmBtn.textContent = 'Ya, Tolak';
+                    break;
+            }
+
+            document.getElementById('confirmModal').classList.remove('hidden');
+            document.getElementById('confirmModal').classList.add('flex');
+            return false; // Mencegah form submit langsung
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+            document.getElementById('confirmModal').classList.remove('flex');
+            _pendingForm = null;
+        }
+
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function () {
+                if (_pendingForm) {
+                    confirmBtn.textContent = 'Memproses...'; 
+                    confirmBtn.disabled = true;
+                    _pendingForm.submit();
+                }
+            });
+        }
+    </script>
     @endpush
 </x-admin-layout>

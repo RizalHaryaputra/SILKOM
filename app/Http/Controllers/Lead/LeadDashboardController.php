@@ -1,65 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Lead;
+namespace App\Http\Controllers\Pimpinan;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Asset;
+use App\Models\Damage;
+use Illuminate\Support\Facades\DB;
 
 class LeadDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('lead.dashboard');
-    }
+        // 1. KPI Finansial
+        $totalAssetValue = Asset::sum('purchase_price');
+        $totalRepairCost = Damage::sum('repair_cost');
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // 2. Data untuk Grafik Donat (Kesehatan Aset)
+        $assetStatusCounts = Asset::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status'); // Hasil: ['Available' => 50, 'Damaged' => 5]
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // 3. Data untuk Grafik Batang (Top 5 Aset Rusak)
+        $topDamagedAssets = Asset::withCount('damages')
+            ->orderBy('damages_count', 'desc')
+            ->take(5)
+            ->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('pimpinan.dashboard', compact(
+            'totalAssetValue',
+            'totalRepairCost',
+            'assetStatusCounts',
+            'topDamagedAssets'
+        ));
     }
 }
