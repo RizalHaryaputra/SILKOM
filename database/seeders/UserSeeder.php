@@ -22,9 +22,9 @@ class UserSeeder extends Seeder
             // --- Akun Sistem ---
             
             $pimpinan = User::create([
-                'name' => 'Pimpinan Fakultas',
+                'name' => 'Pimpinan Lab',
                 'email' => 'pimpinan@lab.com',
-                'password' => Hash::make('password') // Ganti password di production
+                'password' => Hash::make('password')
             ]);
             $pimpinan->assignRole('Lead');
             
@@ -42,59 +42,61 @@ class UserSeeder extends Seeder
             ]);
             $staff->assignRole('Staff');
 
-            // --- Akun Mahasiswa (Tim Pengembang) ---
-            // Data berdasarkan file MSI.pdf 
-
+            // --- Akun Mahasiswa ---
             // Rizal Haryaputra
             $rizalUser = User::create([
                 'name' => 'Rizal Haryaputra',
-                'email' => 'rizal.23051130013@student.uny.ac.id', // Contoh email
+                'email' => 'rizalharyaputra.2023@student.uny.ac.id',
                 'password' => Hash::make('password')
             ]);
             $rizalUser->assignRole('Student');
             Student::create([
                 'user_id' => $rizalUser->id,
                 'student_id_number' => '23051130013',
-                'major' => 'Teknologi Informasi'
+                'major' => 'Teknologi Informasi',
+                'faculty' => 'Fakultas Teknik'
             ]);
 
             // Nabila Putri Aulaya Syifa
             $nabilaUser = User::create([
                 'name' => 'Nabila Putri Aulaya Syifa',
-                'email' => 'nabila.23051130020@student.uny.ac.id', // Contoh email
+                'email' => 'nabilaputri.2023@student.uny.ac.id',
                 'password' => Hash::make('password')
             ]);
             $nabilaUser->assignRole('Student');
             Student::create([
                 'user_id' => $nabilaUser->id,
                 'student_id_number' => '23051130020',
-                'major' => 'Teknologi Informasi'
+                'major' => 'Teknologi Informasi',
+                'faculty' => 'Fakultas Teknik'
             ]);
 
             // Rigel Nadimaisy A.
             $rigelUser = User::create([
                 'name' => 'Rigel Nadimaisy A.',
-                'email' => 'rigel.23051130024@student.uny.ac.id', // Contoh email
+                'email' => 'rigelnadimaisy.2023@student.uny.ac.id',
                 'password' => Hash::make('password')
             ]);
             $rigelUser->assignRole('Student');
             Student::create([
                 'user_id' => $rigelUser->id,
                 'student_id_number' => '23051130024',
-                'major' => 'Teknologi Informasi'
+                'major' => 'Teknologi Informasi',
+                'faculty' => 'Fakultas Teknik'
             ]);
 
             // Rajendriya D.
             $rajaUser = User::create([
                 'name' => 'Rajendriya D.',
-                'email' => 'rajendriya.23051130010@student.uny.ac.id', // Contoh email
+                'email' => 'rajendriyadharmasatyasrengga.2023@student.uny.ac.id',
                 'password' => Hash::make('password')
             ]);
             $rajaUser->assignRole('Student');
             Student::create([
                 'user_id' => $rajaUser->id,
                 'student_id_number' => '23051130010',
-                'major' => 'Teknologi Informasi'
+                'major' => 'Teknologi Informasi',
+                'faculty' => 'Fakultas Teknik'
             ]);
 
         });

@@ -3,63 +3,34 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Borrowing;
 
 class StudentDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('student.dashboard');
-    }
+        $userId = auth()->id();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // 1. KPI: Permintaan Pending
+        $pendingCount = Borrowing::where('user_id', $userId)
+            ->where('status', 'Pending')->count();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // 2. KPI: Aset Sedang Dipinjam
+        $activeCount = Borrowing::where('user_id', $userId)
+            ->where('status', 'Approved')->count();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // 3. Tabel: 5 Peminjaman Terkini (Pending/Approved)
+        $recentBorrowings = Borrowing::with('asset')
+            ->where('user_id', $userId)
+            ->whereIn('status', ['Pending', 'Approved'])
+            ->latest()
+            ->take(5)
+            ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('student.dashboard', compact(
+            'pendingCount',
+            'activeCount',
+            'recentBorrowings'
+        ));
     }
 }

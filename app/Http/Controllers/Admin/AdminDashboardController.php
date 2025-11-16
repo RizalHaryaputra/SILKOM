@@ -3,63 +3,39 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Borrowing;
+use App\Models\AssetRequest;
+use App\Models\Asset;
 
 class AdminDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('admin.dashboard');
-    }
+        // KPI: Tugas Mendesak
+        $pendingBorrowingsCount = Borrowing::where('status', 'Pending')->count();
+        $pendingAssetRequestsCount = AssetRequest::where('status', 'Pending')->count(); // <-- Anda sudah punya ini
+        $damagedAssetsCount = Asset::where('status', 'Damaged')->count();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // Tabel: 5 Peminjaman Pending Teratas
+        $topPendingBorrowings = Borrowing::with(['user', 'asset'])
+            ->where('status', 'Pending')
+            ->latest()
+            ->take(5)
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // Tabel: 5 Pengajuan Alat Pending Teratas
+        $topPendingAssetRequests = AssetRequest::with('requester_user')
+            ->where('status', 'Pending')
+            ->latest()
+            ->take(5)
+            ->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('admin.dashboard', compact(
+            'pendingBorrowingsCount',
+            'pendingAssetRequestsCount',
+            'damagedAssetsCount',
+            'topPendingBorrowings',
+            'topPendingAssetRequests'
+        ));
     }
 }
