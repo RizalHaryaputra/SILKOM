@@ -30,7 +30,10 @@ Route::get('/send-test-email', function () {
 
 // Front page route
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
-
+// Rute untuk halaman publik lainnya
+Route::get('/fitur', [FrontController::class, 'fitur'])->name('fitur');
+Route::get('/tentang', [FrontController::class, 'tentang'])->name('tentang');
+Route::get('/kontak', [FrontController::class, 'kontak'])->name('kontak');
 // Route for Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
