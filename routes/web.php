@@ -86,3 +86,7 @@ Route::middleware(['auth', 'role:Student'])->prefix('student')->name('student.')
 });
 
 require __DIR__ . '/auth.php';
+
+
+Route::get('/katalog-aset', [FrontController::class, 'katalog'])->name('front.katalog');
+Route::get('/panduan', [FrontController::class, 'panduan'])->name('front.panduan');
