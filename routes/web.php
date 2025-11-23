@@ -18,18 +18,12 @@ use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/send-test-email', function () {
-    Mail::raw('Ini adalah pesan email dari Laravel tanpa view.', function ($message) {
-        $message->to('rzlhryptr@email.com')
-                ->subject('Email Tanpa View');
-    });
-
-    return 'Email berhasil dikirim!';
-});
-
-
 // Front page route
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/assets', [FrontController::class, 'assets'])->name('front.assets');
+Route::get('/kms', [FrontController::class, 'kms'])->name('front.kms');
+Route::get('/asset/{asset}', [FrontController::class, 'showAsset'])->name('front.asset-detail');
+Route::get('/kms/{kms}', [FrontController::class, 'showKms'])->name('front.kms-detail');
 
 // Route for Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -88,5 +82,4 @@ Route::middleware(['auth', 'role:Student'])->prefix('student')->name('student.')
 require __DIR__ . '/auth.php';
 
 
-Route::get('/katalog-aset', [FrontController::class, 'katalog'])->name('front.katalog');
-Route::get('/panduan', [FrontController::class, 'panduan'])->name('front.panduan');
+

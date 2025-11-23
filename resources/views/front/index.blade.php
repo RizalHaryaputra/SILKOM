@@ -60,8 +60,8 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="#beranda" class="text-gray-700 hover:text-blue-600 transition">Beranda</a>
                     <a href="#fitur" class="text-gray-700 hover:text-blue-600 transition">Fitur</a>
-                    <a href="#tentang" class="text-gray-700 hover:text-blue-600 transition">Tentang</a>
-                    <a href="#kontak" class="text-gray-700 hover:text-blue-600 transition">Kontak</a>
+                    <a href="#aset" class="text-gray-700 hover:text-blue-600 transition">Aset</a>
+                    <a href="#kms" class="text-gray-700 hover:text-blue-600 transition">KMS</a>
                 </div>
                 <div class="flex space-x-3">
                     @guest
@@ -133,23 +133,28 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="fade-in-up">
                     <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                        Kelola Laboratorium
-                        <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Lebih
-                            Efisien</span>
+                        Sistem Informasi &
+                        <span
+                            class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Manajemen
+                            Laboratorium Komputer</span>
                     </h1>
                     <p class="text-xl text-gray-600 mb-8">
-                        Sistem Informasi Laboratorium Komputer terintegrasi untuk manajemen aset, peminjaman, dan
-                        pelaporan yang lebih cerdas.
+                        Platform terintegrasi untuk mempermudah peminjaman aset, pemantauan inventaris, dan pelaporan
+                        teknis di lingkungan Kampus. Transparan, Efisien, dan Akurat.
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                        <button
-                            class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-2xl transition transform hover:scale-105 font-semibold">
-                            Mulai Sekarang
-                        </button>
-                        <button
-                            class="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition font-semibold">
-                            Demo Gratis
-                        </button>
+                        <a href="{{ route('login') }}">
+                            <button
+                                class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-2xl transition transform hover:scale-105 font-semibold">
+                                Login Sekarang
+                            </button>
+                        </a>
+                        <a href="{{ route('front.assets') }}">
+                            <button
+                                class="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition font-semibold">
+                                Lihat Aset
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="relative float-animation">
@@ -346,105 +351,119 @@
     </section>
 
     {{-- ========================= --}}
-{{-- SECTION: KATALOG ASET     --}}
-{{-- ========================= --}}
-<section class="py-16 bg-gray-50">
-    <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-2">Katalog Aset</h2>
-        <p class="text-gray-600 mb-10">
-            Daftar aset laboratorium yang tersedia untuk digunakan dan dikelola.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @foreach ($latestAssets as $item)
-            <div class="bg-white shadow rounded-xl overflow-hidden">
-
-                {{-- Gambar --}}
-                @if ($item->asset_image_path)
-                    <img src="{{ asset('storage/' . $item->asset_image_path) }}"
-                        class="w-full h-48 object-cover">
-                @else
-                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-600">
-                        Tidak Ada Gambar
-                    </div>
-                @endif
-
-                <div class="p-5 text-left">
-                    <h3 class="font-semibold text-xl">{{ $item->name }}</h3>
-                    <p class="text-green-700 font-bold mt-1">
-                        {{ ucfirst($item->status) }}
-                    </p>
-                    <p class="text-sm text-gray-600 mt-2">
-                        Kategori: {{ $item->category }}
-                    </p>
-
-                    <a href="#" class="block text-center mt-5 border rounded-lg py-2 hover:bg-gray-100">
-                        Lihat Detail
-                    </a>
-                </div>
+    {{-- SECTION: KATALOG ASET --}}
+    {{-- ========================= --}}
+    <section id="aset" class="py-20 px-4 sm:px-6 lg:px-8bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-2">Katalog Aset</h2>
+                <p class="text-gray-600 mb-10">
+                    Daftar aset laboratorium yang tersedia untuk digunakan dan dikelola.
+                </p>
             </div>
-            @endforeach
-        </div>
 
-        {{-- BUTTON LIHAT SEMUA --}}
-        <div class="mt-10">
-            <a href="{{ route('front.katalog') }}"
-               class="bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800">
-                Lihat Semua Aset
-            </a>
-        </div>
-    </div>
-</section>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($latestAssets as $asset)
+                <div
+                    class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
 
-
-{{-- ========================= --}}
-{{-- SECTION: PANDUAN KMS      --}}
-{{-- ========================= --}}
-<section class="py-16 bg-white">
-    <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-2">Panduan Penggunaan Lab (KMS)</h2>
-        <p class="text-gray-600 mb-10">
-            Dokumen panduan penggunaan laboratorium untuk membantu operasional kegiatan.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @foreach ($latestGuides as $guide)
-            <div class="bg-white shadow rounded-xl overflow-hidden">
-
-                {{-- Gambar --}}
-                @if ($guide->cover_image)
-                    <img src="{{ asset('storage/' . $guide->cover_image) }}"
-                        class="w-full h-48 object-cover">
-                @else
-                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-600">
-                        Tidak Ada Gambar
+                    {{-- Gambar --}}
+                    @if ($asset->asset_image_path)
+                    <img src="{{ asset('storage/' . $asset->asset_image_path) }}" class="w-full h-48 object-cover">
+                    @else
+                    <div class="w-full h-48 bg-gray-200 text-gray-400 flex flex-col items-center justify-center">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="mt-4 text-md font-medium">Tidak ada gambar</span>
                     </div>
-                @endif
+                    @endif
 
-                <div class="p-5 text-left">
-                    <h3 class="font-semibold text-xl">{{ $guide->title }}</h3>
-                    <p class="text-sm text-gray-600 mt-2">
-                        Kategori: {{ $guide->category }}
-                    </p>
+                    <div class="p-5 text-left">
+                        <h3 class="font-semibold text-xl">{{ $asset->name }}</h3>
+                        <p class="text-green-700 font-bold mt-1">
+                            {{ ucfirst($asset->status) }}
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            Kategori: {{ $asset->category }}
+                        </p>
 
-                    <a href="#" class="block text-center mt-5 border rounded-lg py-2 hover:bg-gray-100">
-                        Lihat Detail
-                    </a>
+                        <a href="{{ route('front.asset-detail', $asset) }}"
+                            class="block text-center mt-5 border rounded-lg py-2 hover:bg-gray-100">
+                            Lihat Detail
+                        </a>
+                    </div>
                 </div>
-
+                @endforeach
             </div>
-            @endforeach
-        </div>
 
-        {{-- BUTTON LIHAT SEMUA --}}
-        <div class="mt-10">
-            <a href="{{ route('front.panduan') }}"
-               class="bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800">
-                Lihat Semua Panduan
-            </a>
+            {{-- BUTTON LIHAT SEMUA --}}
+            <div class="text-center mt-10">
+                <a href="{{ route('front.assets') }}"
+                    class="px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:shadow-lg transition transform hover:scale-105">
+                    Lihat Semua Aset
+                </a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+
+    {{-- ========================= --}}
+    {{-- SECTION: PANDUAN KMS --}}
+    {{-- ========================= --}}
+    <section id="kms" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-2">Panduan Penggunaan Lab (KMS)</h2>
+                <p class="text-gray-600 mb-10">
+                    Dokumen panduan penggunaan laboratorium untuk membantu operasional kegiatan.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @foreach ($latestGuides as $kms)
+                <div
+                    class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
+
+                    {{-- Gambar --}}
+                    @if ($kms->cover_image)
+                    <img src="{{ asset('storage/' . $kms->cover_image) }}" class="w-full h-48 object-cover">
+                    @else
+                    <div class="w-full h-48 bg-gray-200 text-gray-400 flex flex-col items-center justify-center">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="mt-4 text-md font-medium">Tidak ada gambar</span>
+                    </div>
+                    @endif
+
+                    <div class="p-5 text-left">
+                        <h3 class="font-semibold text-xl">{{ $kms->title }}</h3>
+                        <p class="text-sm text-gray-600 mt-2">
+                            Kategori: {{ $kms->category }}
+                        </p>
+
+                        <a href="{{ route('front.kms-detail', $kms) }}"
+                            class="block text-center mt-5 border rounded-lg py-2 hover:bg-gray-100">
+                            Lihat Detail
+                        </a>
+                    </div>
+
+                </div>
+                @endforeach
+            </div>
+
+            {{-- BUTTON LIHAT SEMUA --}}
+            <div class="text-center mt-10">
+                <a href="{{ route('front.kms') }}"
+                    class="px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:shadow-lg transition transform hover:scale-105">
+                    Lihat Semua Panduan
+                </a>
+            </div>
+        </div>
+    </section>
 
 
 
@@ -456,24 +475,28 @@
                 <p class="text-xl text-gray-600">Dibangun dengan teknologi modern dan terpercaya</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition">
+                <div
+                    class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
                     <div class="text-4xl mb-3">🚀</div>
                     <h4 class="font-semibold text-gray-900">Laravel 12</h4>
                     <p class="text-sm text-gray-600">Framework Backend</p>
                 </div>
-                <div class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition">
+                <div
+                    class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
                     <div class="text-4xl mb-3">🎨</div>
                     <h4 class="font-semibold text-gray-900">Tailwind CSS</h4>
                     <p class="text-sm text-gray-600">Modern UI</p>
                 </div>
-                <div class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition">
+                <div
+                    class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
                     <div class="text-4xl mb-3">🗄️</div>
                     <h4 class="font-semibold text-gray-900">MySQL</h4>
                     <p class="text-sm text-gray-600">Database</p>
                 </div>
-                <div class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition">
+                <div
+                    class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
                     <div class="text-4xl mb-3">📊</div>
-                    <h4 class="font-semibold text-gray-900">ApexCharts</h4>
+                    <h4 class="font-semibold text-gray-900">Chart.js</h4>
                     <p class="text-sm text-gray-600">Visualisasi Data</p>
                 </div>
             </div>
@@ -484,18 +507,23 @@
     <section class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto text-center">
             <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-12 shadow-2xl">
-                <h2 class="text-4xl font-bold text-white mb-4">Siap Mengoptimalkan Laboratorium Anda?</h2>
-                <p class="text-xl text-blue-100 mb-8">Bergabunglah dengan sistem manajemen lab yang modern dan efisien
+                <h2 class="text-4xl font-bold text-white mb-4">Siap Menggunakan Fasilitas Lab?</h2>
+                <p class="text-xl text-blue-100 mb-8">Bergabunglah sekarang untuk meminjam aset, cek ketersediaan
+                    komputer, dan akses panduan teknis dalam satu pintu.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                    <button
-                        class="px-8 py-4 bg-white text-blue-600 rounded-xl hover:shadow-2xl transition transform hover:scale-105 font-semibold">
-                        Mulai Gratis
-                    </button>
-                    <button
-                        class="px-8 py-4 border-2 border-white text-white rounded-xl hover:bg-white hover:text-blue-600 transition font-semibold">
-                        Hubungi Kami
-                    </button>
+                    <a href="{{ route('register') }}">
+                        <button
+                            class="px-8 py-4 bg-white text-blue-600 rounded-xl hover:shadow-2xl transition transform hover:scale-105 font-semibold w-full sm:w-auto">
+                            Daftar Sekarang
+                        </button>
+                    </a>
+                    <a href="{{ route('front.assets') }}">
+                        <button
+                            class="px-8 py-4 border-2 border-white text-white rounded-xl hover:bg-white hover:text-blue-600 transition font-semibold w-full sm:w-auto">
+                            Lihat Katalog Aset
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -505,7 +533,9 @@
     <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
+
+                {{-- 1. Brand & Deskripsi --}}
+                <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center space-x-2 mb-4">
                         <div
                             class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
@@ -514,38 +544,108 @@
                                     d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <span class="text-xl font-bold">SILKOM</span>
+                        <span class="text-xl font-bold tracking-wide">SILKOM</span>
                     </div>
-                    <p class="text-gray-400 text-sm">Sistem Informasi Laboratorium Komputer untuk manajemen yang lebih
-                        baik.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Sistem Informasi Manajemen Laboratorium Komputer yang terintegrasi untuk mendukung kegiatan
+                        praktikum dan akademik di Fakultas Teknik.
+                    </p>
                 </div>
+
+                {{-- 2. Layanan --}}
                 <div>
-                    <h4 class="font-semibold mb-4">Produk</h4>
+                    <h4 class="text-lg font-semibold mb-4 text-white">Layanan Lab</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Fitur</a></li>
-                        <li><a href="#" class="hover:text-white transition">Harga</a></li>
-                        <li><a href="#" class="hover:text-white transition">Demo</a></li>
+                        <li>
+                            <a href="{{ route('front.assets') }}"
+                                class="hover:text-blue-400 transition duration-200 flex items-center gap-2">
+                                <span>&rsaquo;</span> Katalog Aset
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('front.kms') }}"
+                                class="hover:text-blue-400 transition duration-200 flex items-center gap-2">
+                                <span>&rsaquo;</span> Panduan & SOP
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}"
+                                class="hover:text-blue-400 transition duration-200 flex items-center gap-2">
+                                <span>&rsaquo;</span> Peminjaman Alat
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}"
+                                class="hover:text-blue-400 transition duration-200 flex items-center gap-2">
+                                <span>&rsaquo;</span> Cek Ketersediaan
+                            </a>
+                        </li>
                     </ul>
                 </div>
+
+                {{-- 3. Tautan Cepat --}}
                 <div>
-                    <h4 class="font-semibold mb-4">Perusahaan</h4>
+                    <h4 class="text-lg font-semibold mb-4 text-white">Tautan Cepat</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Tentang Kami</a></li>
-                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition">Karir</a></li>
+                        <li>
+                            <a href="/"
+                                class="hover:text-blue-400 transition duration-200">Beranda</a>
+                        </li>
+                        <li>
+                            <a href="https://www.uny.ac.id/" target="_blank"
+                                class="hover:text-blue-400 transition duration-200">Universitas Negeri Yogyakarta</a>
+                        </li>
+                        <li>
+                            <a href="https://ft.uny.ac.id/" target="_blank"
+                                class="hover:text-blue-400 transition duration-200">Fakultas Teknik</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}" class="hover:text-blue-400 transition duration-200">Login
+                                Staff/Admin</a>
+                        </li>
                     </ul>
                 </div>
+
+                {{-- 4. Kontak --}}
                 <div>
-                    <h4 class="font-semibold mb-4">Dukungan</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Dokumentasi</a></li>
-                        <li><a href="#" class="hover:text-white transition">Kontak</a></li>
-                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                    <h4 class="text-lg font-semibold mb-4 text-white">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Gedung KPLT Lt. 2, Fakultas Teknik, Karangmalang, Yogyakarta</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span>lab.komputer@uny.ac.id</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span>(0274) 586168</span>
+                        </li>
                     </ul>
                 </div>
+
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2025 SILKOM. Developed by Hrya.</p>
+
+            {{-- Copyright --}}
+            <div
+                class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; {{ date('Y') }} SILKOM - Universitas Negeri Yogyakarta.</p>
+                <p class="mt-2 md:mt-0">Developed by <span class="text-gray-300">Hrya</span> & Tim.</p>
             </div>
         </div>
     </footer>

@@ -25,22 +25,30 @@ class FrontController extends Controller
     // ===============================
     // Halaman Katalog Aset (READ-ONLY)
     // ===============================
-    public function katalog()
+    public function assets()
     {
         // Ambil semua aset
         $assets = Asset::all();
 
-        return view('front.katalog', compact('assets'));
+        return view('front.assets', compact('assets'));
     }
 
     // ===============================
     // Halaman Panduan KMS (READ-ONLY)
     // ===============================
-    public function panduan()
+    public function kms()
     {
         // Ambil semua panduan KMS
         $guides = KmsDocument::all();
 
-        return view('front.panduan', compact('guides'));
+        return view('front.kms', compact('guides'));
+    }
+
+    public function showAsset(Asset $asset) {
+        return view('front.asset-detail', compact('asset'));
+    }
+
+    public function showKms(KmsDocument $kms) {
+        return view('front.kms-detail', compact('kms'));
     }
 }
