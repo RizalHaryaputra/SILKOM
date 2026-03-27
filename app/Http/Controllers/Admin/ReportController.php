@@ -22,7 +22,7 @@ class ReportController extends Controller
     {
         // --- 1. Ambil Filter dari Request ---
 
-        // Tetapkan jenis laporan default jika tidak ada
+        // Tetapkan jenis laporan default jika tidak ada    
         $reportType = $request->input('report_type', 'asset_summary');
 
         // Tetapkan rentang tanggal default (1 bulan terakhir)
@@ -84,7 +84,7 @@ class ReportController extends Controller
     }
 
     /**
-     * [cite_start]LAPORAN 1: Sering Rusak / Sering Dipinjam [cite: 27]
+     * Sering Rusak / Sering Dipinjam
      */
     private function getAssetSummaryReport($start, $end)
     {

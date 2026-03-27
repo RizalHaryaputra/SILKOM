@@ -22,7 +22,7 @@
             {{-- Overlay mobile --}}
             <div x-show="sidebarOpen" x-transition.opacity @click="sidebarOpen = false"
                 :class="sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'"
-                class="fixed inset-0 z-20 bg-black bg-opacity-50 transition-opacity lg:hidden">
+                class="fixed inset-0 z-20 bg-black/20 bg-opacity-50 transition-opacity lg:hidden">
             </div>
 
             {{-- Sidebar --}}

@@ -84,16 +84,31 @@
                             Login
                         </button>
                     </div>
+
+                    <div class="mt-4 flex flex-col gap-2">
+                        <div class="relative flex py-3 items-center">
+                            <div class="flex-grow border-t border-gray-300"></div>
+                            <span class="flex-shrink mx-4 text-gray-400 text-sm">Atau</span>
+                            <div class="flex-grow border-t border-gray-300"></div>
+                        </div>
+
+                        <a href="{{ route('google.login') }}"
+                            class="flex items-center justify-center gap-2 w-full py-4 px-6 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                class="w-5 h-5">
+                            <span class="text-sm font-medium text-gray-700">Masuk dengan Google</span>
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-    
+
     {{-- PERBAIKAN: Gunakan @push untuk mengirim skrip ke layout --}}
     @push('scripts')
     {{-- Skrip untuk show/hide password --}}
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
         function setupPasswordToggle(inputId, toggleButtonId, eyeIconId, eyeSlashIconId) {
             const input = document.getElementById(inputId);
             const toggle = document.getElementById(toggleButtonId);
